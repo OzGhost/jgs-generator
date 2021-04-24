@@ -3,4 +3,6 @@ public class Beam {
     protected Map<String, String> _b;
     transient List<String> $c;
     private volatile int[] d9;
+    private boolean activating;
+    private Boolean loading;
 }

@@ -42,9 +42,13 @@ fu! s:cook(line)
     let indent = substitute(a:line, s:coffin, '\1', '')
     let type = substitute(a:line, s:coffin, '\3', '')
     let name = substitute(a:line, s:coffin, '\4', '')
-    let fname = 'et' . toupper(strpart(name, 0, 1)) . strpart(name, 1, len(name) - 1)
-    call s:pump(s:getter_frame, 'g'.fname, indent, type, name)
-    call s:pump(s:setter_frame, 's'.fname, indent, type, name)
+    let fname = toupper(strpart(name, 0, 1)) . strpart(name, 1, len(name) - 1)
+    if type ==? "boolean"
+        call s:pump(s:getter_frame, 'is'.fname, indent, type, name)
+    else
+        call s:pump(s:getter_frame, 'get'.fname, indent, type, name)
+    endif
+    call s:pump(s:setter_frame, 'set'.fname, indent, type, name)
 endf
 
 fu! s:pump(frames, func, indent, type, name)
